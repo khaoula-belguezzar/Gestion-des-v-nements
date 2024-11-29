@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Organiz'it | Events List</title>
+    <link rel="shortcut icon" th:href="@{/images/img6.png}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/homeUser.css}">
+
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Navbar verticale élégante -->
+        <nav class="col-md-2 d-none d-md-block bg-custom sidebar">
+            <div class="sidebar-sticky">
+                <a class="navbar-brand text-white text-center py-3 d-block d-flex align-items-center justify-content-center" href="/">
+                    <img th:src="@{/images/img6.png}" alt="Logo" class="logo-img mr-2">
+                    <span class="logo-text font-weight-bold">Organiz'it</span>
+                </a>
+                <br>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/}">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/myevents}">
+                            <i class="fas fa-calendar-plus me-2"></i>
+                            <span class="nav-text">my Events</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" th:action="@{/logout}" class="d-inline">
+                            <button class="btn btn-link nav-link logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="nav-text">Logout</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div th:if="${param.success == 'Your participation has been confirmed. Enjoy the event !'}"
+             class="alert alert-success alert-message alert-dismissible fade show">
+            <i class="fas fa-check-circle"></i> <!-- Icône Font Awesome pour succès -->
+            <p>Your participation has been confirmed. Enjoy the event !</p>
+        </div>
+        <div th:if="${param.error == 'Oops! Something went wrong with your registration. Please try again.'}"
+             class="alert alert-danger alert-message alert-dismissible fade show">
+            <i class="fas fa-exclamation-circle"></i> <!-- Icône Font Awesome pour erreur -->
+            <p>Oops! Something went wrong with your registration. Please try again.</p>
+        </div>
+        <div th:if="${param.error == 'Sorry ! You have already registered for this event.'}"
+             class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i>
+            <p>Sorry ! You have already registered for this event.</p>
+        </div>
+        <div>
+            <main role="main" class="col-md-10 ms-sm-auto col-lg-10 px-4">
+                <div class="widget">
+                    <h1 style="text-align: center;">Welcome, <span th:text="${username}"></span>!</h1>
+                    <p class="lead" style="text-align: center;"> As a participant, you can explore and join
+                        exciting events from the list below. Discover opportunities to connect, learn,
+                        and engage with others by participating in events that interest you. </p>
+                    <br>
+                    <h2 style="text-align: center;">Explore Our Upcoming Events</h2>
+                    <!-- Row title -->
+                    <main class="row title">
+                        <ul>
+                            <li>Event Name</li>
+                            <li>Event Venue</li>
+                            <li>Date / Time</li>
+                            <li>Event Category</li>
+                            <li>Event Host</li>
+                            <li>Event Price</li>
+                            <li>Options</li>
+                        </ul>
+                    </main>
+
+                    <!-- Row Data -->
+                    <section class="row-fadeIn-wrapper">
+                        <div th:each="listevente : ${listevent}" class="row fadeIn">
+                            <ul style="list-style: none; padding: 0; display: flex; justify-content: space-around; align-items: center;">
+                                <li th:text="${listevente.titre}"></li>
+                                <li th:text="${listevente.lieu}"></li>
+                                <li th:text="${listevente.date}"></li>
+                                <li th:text="${listevente.type}"></li>
+                                <li th:text="${listevente.user.companyName}"></li>
+                                <li th:text="${listevente.prix + ' DH'}"></li>
+                                <li class="text-center action-icons">
+                                    <div class="d-flex justify-content-center align-items-center gap-3">
+                                        <a th:if="${listevente.capacite > 0}"
+                                           th:href="@{/user/payment/{id}(id=${listevente.id})}"
+                                           title="Participate">
+                                            <i class="fas fa-hand-paper" style="font-size: 1.5rem;"></i>
+                                        </a>
+
+                                        <form th:if="${listevente.capacite == 0}" th:action="@{/user/waitingList/{id}(id=${listevente.id})}" method="post">
+                                            <button type="submit" title="Add to Waiting List">
+                                                <i class="fas fa-plus-circle" style="font-size: 1.5rem;"></i>
+                                            </button>
+                                        </form>
+
+                                        <a href="#" class="text-danger" title="Cancel">
+                                            <i class="fas fa-ban" style="font-size: 1.5rem;"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <br><br><br>
+                            <ul class="more-content">
+                                <li th:text="'Détails supplémentaires : ' + ${listevente.getDescription()}"></li>
+                            </ul>
+                            <br><br>
+                            <ul class="more-content">
+                                <div class="ratings">
+                                    <div>
+                                        <!-- Étoiles de notation -->
+                                        <i th:each="star : ${#numbers.sequence(1, 5)}"
+                                           th:classappend="${star <= T(java.lang.Math).round(listevente.averageRating) ? 'fa fa-star text-warning' : 'fa fa-star'}">
+                                        </i>
+                                        <span th:text="${T(java.lang.Math).round(listevente.averageRating)} + '/5'"></span>
+                                    </div>
+                                </div>
+
+                                <form th:action="@{/user/rate}" method="POST" class="rating-form">
+                                    <input type="hidden" name="id" th:value="${listevente.id}" />
+                                    <select name="rating" id="rating" class="form-select" required>
+                                        <option value="1">Poor</option>
+                                        <option value="2">Fair</option>
+                                        <option value="3">Good</option>
+                                        <option value="4">Very Good</option>
+                                        <option value="5">Excellent</option>
+                                    </select>
+                                    <button type="submit" class="submit-button" title="Submit Rating">
+                                        <i class="fas fa-paper-plane submit-icon"></i>
+                                    </button>
+                                </form>
+
+
+                            </ul>
+
+                        </div>
+
+                    </section>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

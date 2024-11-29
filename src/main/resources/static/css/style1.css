@@ -1,0 +1,77 @@
+
+/* row one - fadeIn */
+.row-fadeIn-wrapper {
+    opacity: 0;
+    font-size: 0;
+    height: 0;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.2s ease-out;
+    -webkit-animation: fadeIn 0.4s ease-out 2s 1 alternate;
+    animation: fadeIn 0.4s ease-out 2s 1 alternate;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.row-fadeIn-wrapper:hover {
+    height: 35px;
+}
+@media only screen and (max-width: 767px) {
+    .row-fadeIn-wrapper:hover {
+        height: 55px;
+    }
+}
+@media only screen and (max-width: 359px) {
+    .row-fadeIn-wrapper:hover {
+        height: 75px;
+    }
+}
+
+.fadeIn {
+    padding: 20px 0;
+    font-size: 0;
+    position: absolute;
+    transition: all 0.2s ease-out;
+    width: 100%;
+}
+
+.fadeIn:hover {
+    background-color: rgba(26, 26, 26, 0.9);
+}
+
+/* row two - fadeOut */
+.row-fadeOut-wrapper {
+    font-size: 0;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.2s ease-out;
+    -webkit-animation: fadeOut 0.4s ease-out 8s 1 alternate;
+    animation: fadeOut 0.4s ease-out 8s 1 alternate;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    opacity: 1;
+    height: 65px;
+}
+
+.row-fadeOut-wrapper:hover {
+    height: 100px;
+}
+
+/* more content */
+ul.more-content li {
+    position: relative;
+    top: 22px;
+    font-size: 13px;
+    margin: 0;
+    padding: 10px 13px;
+    display: block;
+    height: 50px;
+    width: 100%;
+    color: rgba(128, 128, 128, 0.9);
+}
+@media only screen and (max-width: 767px) {
+    ul.more-content li {
+        font-size: 11px;
+    }
+}
+

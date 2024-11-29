@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>RegistrationForm | Organize Events with Ease</title>
+    <link rel="shortcut icon" th:href="@{/images/img6.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" th:href="@{/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css}">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" th:href="@{css/style.css}">
+
+    <script>
+        function toggleCompanyField() {
+            const organizerCheckbox = document.getElementById('organizerCheckbox');
+            const companyField = document.getElementById('companyField');
+            // Afficher ou masquer le champ Company Name en fonction de la case cochée
+            companyField.style.display = organizerCheckbox.checked ? 'block' : 'none';
+        }
+    </script>
+</head>
+
+<body>
+
+<div class="wrapper" th:style="'background-image: url(' + @{/images/bag1.jpg} + ');'">
+    <div class="inner">
+        <div></div>
+        <div class="image-holder">
+            <img th:src="@{/images/img3.png}" alt="">
+        </div>
+        <form th:action="@{/register}" method="post" th:object="${utilisateur}">
+            <h3>Registration Form</h3>
+            <div class="form-wrapper">
+                <input type="text" name="nomPrenom" placeholder="Full Name" class="form-control" required>
+            </div>
+            <div class="form-wrapper">
+                <input type="text" name="username" placeholder="username" class="form-control" required>
+                <i class="zmdi zmdi-account"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="text" name="email" placeholder="Email Address" class="form-control" required>
+                <i class="zmdi zmdi-email"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="text" name="numTele" placeholder="Number Phone" class="form-control" required>
+                <i class="zmdi zmdi-phone"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="password" name="password" placeholder="Password" class="form-control" required>
+            </div>
+            <div class="form-wrapper">
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" class="form-control" required>
+            </div>
+            <!-- Case à cocher pour organiser -->
+            <div class="form-wrapper">
+                    <input type="checkbox" id="organizerCheckbox" name="organisateur" onclick="toggleCompanyField()"> Are you an organizer?
+            </div>
+            <br>
+            <!-- Champ Nom de l'entreprise masqué par défaut -->
+            <div class="form-wrapper" id="companyField" style="display: none;">
+                <input type="text" name="companyName" placeholder="Company Name" class="form-control">
+            </div>
+            <button type="submit">Register
+                <i class="zmdi zmdi-arrow-right"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

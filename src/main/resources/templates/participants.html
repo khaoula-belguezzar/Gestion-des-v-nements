@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Organiz'it | Liste of Participants </title>
+    <link rel="shortcut icon" th:href="@{/images/img6.png}">
+    <!-- Inclure Bootstrap et Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/homeAdmin.css}">
+
+</head>
+<body class="bg-light">
+
+<!-- Barre de navigation latérale -->
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-custom sidebar">
+            <div class="sidebar-sticky">
+                <a class="navbar-brand text-white text-center py-3 d-block d-flex align-items-center justify-content-center" href="/">
+                    <img th:src="@{/images/img6.png}" alt="Logo" class="logo-img mr-2">
+                    <span class="logo-text font-weight-bold">Organiz'it</span>
+                </a>
+                <br>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{/}">
+                            <i class="fas fa-home"></i>
+                            <span class="nav-text">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/showpayement}">
+                            <i class="fa-solid fa-wallet"></i>
+                            <span class="nav-text">Event Billing Info</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" th:action="@{/logout}" class="d-inline">
+                            <button class="btn btn-link nav-link logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="nav-text">Logout</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-10 ms-sm-auto col-lg-10 px-4">
+            <div class="widget">
+                <div class="d-flex justify-content-center align-items-center mb-3">
+                    <i class="fas fa-users fa-2x me-3" style="color: #457b9d;"></i>
+                    <h3 class="text-center">List of all participants for event <span th:text="${eventTitle}"></span></h3>
+                </div>
+                <br>
+                <div class="confirmation-box">
+                    <h4 class="text-center">
+                        <span th:if="${eventCapacity == 0}" class="full-list" style="color: #AE4D0F;">
+                            <i class="fas fa-ban icon"></i> The list is complete for this event
+                        </span>
+                        <span th:unless="${eventCapacity == 0}" class="places-left" style="color: #138496;">
+                            <i class="fas fa-users icon"></i> There are "<span th:text="${eventCapacity}"></span>" places left
+                        </span>
+                    </h4>
+                </div>
+
+                <main class="row title">
+                    <ul>
+                        <li>Username</li>
+                        <li>Full Name</li>
+                        <li>Email</li>
+                        <li>Phone Number</li>
+                    </ul>
+                </main>
+                <section class="row-fadeIn-wrapper">
+                    <div th:each="participant : ${participants}" class="row fadeIn">
+                        <ul>
+                            <li th:text="${participant.username}"></li>
+                            <li th:text="${participant.getNomPrenom()}"></li>
+                            <li th:text="${participant.email}"></li>
+                            <li th:text="${participant.numTele}"></li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+</div>
+<!-- Inclure Bootstrap JS et Font Awesome JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

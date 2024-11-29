@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Authentification | Organize Events with Ease</title>
+    <link rel="shortcut icon" th:href="@{/images/img6.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- MATERIAL DESIGN ICONIC FONT -->
+    <link rel="stylesheet" th:href="@{/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css}">
+
+    <!-- STYLE CSS -->
+    <link rel="stylesheet" th:href="@{css/style.css}">
+
+</head>
+
+<body>
+
+<div class="wrapper" th:style="'background-image: url(' + @{/images/bag1.jpg} + ');'">
+    <div class="inner">
+        <form method="post" th:action="@{/login}">
+            <h3>Authentification Form</h3>
+            <div class="form-wrapper">
+                <input type="text" id="username" placeholder="Username" name="username" class="form-control">
+                <i class="zmdi zmdi-account"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+            </div>
+            <!-- Case à cocher pour organiser -->
+            <div class="form-wrapper">
+                <input type="checkbox"  name="remember-me" > Remenber Me
+            </div>
+            <br>
+            <button type="submit">Log In
+                <i class="zmdi zmdi-arrow-right"></i>
+            </button>
+
+        </form>
+        <div></div>
+        <div class="image-holder">
+            <img th:src="@{/images/img3.png}" alt="">
+        </div>
+    </div>
+</div>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
